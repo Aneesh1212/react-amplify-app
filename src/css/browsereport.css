@@ -1,0 +1,24 @@
+
+
+
+
+.report-card-holder {background-color: rgba(0,0,0,.1);
+              height: 200px;padding: 10px;
+}
+
+.report-card {background-color: #1c1c1c;
+              background-size: cover;
+              height: 100%;color: white;
+              box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+              padding: 10px;}
+
+
+.report-card li {margin-left: 0px;}
+
+.report-card ul {padding-inline-start: 10px;
+                list-style-type: "- ";}
+
+
+.report-card .buttonholder {position: absolute;left: 66%;bottom: 10%;}
+
+#holder {width: 90vw;margin-left: 5vw;margin-right: 5vw;}

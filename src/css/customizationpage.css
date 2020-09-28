@@ -1,0 +1,90 @@
+
+body {margin: 0px;}
+
+input{border: 0px}
+
+.mainbackground{width: 100%;background: url(../Images/mainback.jpg)repeat fixed 100%;
+background-size: cover;height: 300%;background-position: bottom;min-height: 100vh;}
+
+.shortbar {
+  background-color: #1c1c1c;
+  height: 10px;
+  margin: 0px;
+  width: 60%;}
+
+
+
+  .data-holder {width: 100%;background-color: white;height: 50vh;padding: 5px;overflow: scroll;overflow-x: hidden;}
+
+  .data-holder hr {width: 90%;height: 4px;background-color: #1c1c1c;margin-top: 4px;}
+  .data-holder h3 {padding: 0px;margin-left: 5%;margin-top:5px;margin-bottom: 2px;font-weight: 900;}
+
+  .data-holder input {margin-left: 5%;}
+
+.othersettings {background-color: #1c1c1c;padding: 10px;}
+
+.subpill {padding: 10px;}
+
+.subpill h4 {font-weight: 600;color: white;}
+
+.subpill .reportcustominput {border-bottom: 2px solid white;color: white;}
+
+.subpill select option {background-color: white;color: #1c1c1c;}
+
+.nomargin{margin: 0px;}
+
+
+.reportcustominput {
+  border: 0px;
+  border-bottom: 2px solid #1c1c1c;
+  background-color: transparent;
+  width:120px;
+  text-align: center;
+}
+
+.reportcustominput:focus {
+  border: 0px;
+}
+
+.reportrequest {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  transition: all  1s;}
+
+.reportrequest:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  transition: all  1s;
+
+}
+
+.submitcustom {background-color: transparent;width: 100%;height: 100%;padding: 20px;}
+
+
+.roundbutton {border-radius: 99px;
+              background-color: #1c1c1c;
+              color: white;}
+
+
+.hide {display: none;}
+
+
+
+/*  Hide the toggle content */
+.toggle-content{display: none;}
+
+/*  Show the toggle content by using the general sibling selector */
+.reportrequest input[type=checkbox]:checked ~ label {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.reportrequest input[type=checkbox]:checked ~ .toggle-content {
+    display: block;
+    min-height: 100px;
+    background-color: lightgrey;
+    padding: 20px;
+    border-radius: 4px;
+    border: dotted #1c1c1c 1px
+}
