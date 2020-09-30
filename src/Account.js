@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import AWS from 'aws-sdk';
-
+import NavBar from './NavBar'
 import './css/bootstrap.min.css';
 import './css/general.css';
 import './css/navbar.css';
@@ -48,8 +48,10 @@ class Account extends React.Component {
     return (
       <div className="mainbackground" id = "mainDiv">
         <div className="container">
+            <NavBar />
             <div id="accountinfo" className="accountinfo col-md-6 col-md-offset-3">
             </div>
+
         </div>
       </div>
   );

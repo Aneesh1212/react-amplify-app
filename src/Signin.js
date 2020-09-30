@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
 import './css/login.css';
-import './css/navbar.css';
 import { Redirect } from "react-router-dom";
 import Link from 'react';
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
@@ -141,6 +140,7 @@ class Signin extends React.Component {
                 console.log(accessToken);
                 alert("sign in success!");
                 console.log('Successfully Logged In');
+                window.location.href = '/account';
             },
             (err) => {
                 console.log("login failed");

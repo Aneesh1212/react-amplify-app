@@ -5,11 +5,12 @@ import Signin from './Signin';
 import NavBar from './NavBar';
 import Account from './Account';
 import BrowseReport from './BrowseReport';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Signin />
+      <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
