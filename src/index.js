@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Signin from './Signin';
-import NavBar from './NavBar';
-import Account from './Account';
-import BrowseReport from './BrowseReport';
+import Signin from './pages/Signin';
+import Account from './pages/Account';
+import BrowseReport from './pages/BrowseReport';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-      <App />
-  </React.StrictMode>,
+      <App />,
   document.getElementById('root')
 );
 

@@ -3,7 +3,7 @@ body {margin: 0px;}
 
 input{border: 0px}
 
-.mainbackground{width: 100%;background: url(../Images/mainback.jpg)repeat fixed 100%;
+.mainbackground{width: 100%;background: url(../images/mainback.jpg)repeat fixed 100%;
 background-size: cover;height: 300%;background-position: bottom;min-height: 100vh;}
 
 .shortbar {

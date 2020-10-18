@@ -1,12 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import AWS from 'aws-sdk';
-import NavBar from './NavBar'
-import './css/bootstrap.min.css';
-import './css/general.css';
-import './css/navbar.css';
-import './css/account.css';
-import {authAndReturnParams} from './auth'
+import NavBar from '../components/NavBar'
+import '../css/cloudflare.css';
+import '../css/bootstrap.min.css';
+import '../css/general.css';
+import '../css/navbar.css';
+import '../css/account.css';
+import {authAndReturnParams} from '../js/auth'
 
 
 class Account extends React.Component {

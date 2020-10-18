@@ -1,4 +1,4 @@
-.mainbackground{position: fixed;width: 100%;background: url(../Images/mainback.jpg)repeat fixed 100%;
+.mainbackground{width: 100%;background: url(../images/mainback.jpg)repeat fixed 100%;
 background-size: cover;height: 100%;background-position: bottom;z-index: -99}
 
 

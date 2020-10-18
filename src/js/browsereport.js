@@ -1,58 +1,84 @@
-import React from 'react';
-import logo from './logo.svg';
-import './css/bootstrap.min.css';
-import './css/navbar.css';
-import './css/general.css';
-import './css/dev.css';
+import {authAndRun, authAndReturnParams, deleteObjectAndRun, listObjsAndRun, iteratedObjGet, callLambdaAndRun} from './auth.js'
+import { getUrlParam } from './generalfunctions.js'
 
-
-class BrowseReport extends React.Component {
-
-  constructor(props){
-    super(props);
+function openreport(reportid) {
+  window.open("/scorecards?reportid="+reportid)
 }
 
-  componentDidMount(){
-    const script = document.createElement("script");
-    script.src = "./auth.js";
-    script.async = false;
-    document.body.appendChild(script);
-  }
+function editreport(reportid) {
+  window.open("customization.html?reportid="+reportid)
+}
 
+function deletereport(reportid) {
+  authAndReturnParams((data)=>{
+    console.log(data)
+    var teamname = data.team;
+    var tempprefix = teamname+"/reports/"+reportid+"/"
+    var config_target = tempprefix+"report_"+teamname+"_"+reportid+".json";
+    var data_target = tempprefix+"data_"+teamname+"_"+reportid+".json";
 
-  openreport(reportid) {
-    window.open("scorecards.html?reportid="+reportid)
-  }
-
-  editreport(reportid) {
-    window.open("customization.html?reportid="+reportid)
-  }
-
- deletereport(reportid) {
-    document.body.script.authAndReturnParams((data)=>{
-      console.log(data)
-      var teamname = data.team;
-      var tempprefix = teamname+"/reports/"+reportid+"/"
-      var config_target = tempprefix+"report_"+teamname+"_"+reportid+".json";
-      var data_target = tempprefix+"data_"+teamname+"_"+reportid+".json";
-
-      console.log(config_target)
-      console.log(data_target)
-      document.body.scriptdeleteObjectAndRun("titancommonstorage",config_target,(data)=>{
-        console.log("configyeeted")
-
-      });
-      document.body.scriptdeleteObjectAndRun("titancommonstorage",data_target,(data)=>{
-        console.log("datayeeted")
-      });
-
+    console.log(config_target)
+    console.log(data_target)
+    deleteObjectAndRun("titancommonstorage",config_target,(data)=>{
+      console.log("configyeeted")
 
     });
-    document.getElementById(reportid).remove()
-  }
+    deleteObjectAndRun("titancommonstorage",data_target,(data)=>{
+      console.log("datayeeted")
+    });
 
-  authAndRun(team){
-      document.body.script.listObjsAndRun(`${team}/reports`,"titancommonstorage",(data)=>{
+
+  });
+  document.getElementById(reportid).remove()
+}
+
+
+
+
+// function populatepage(tempuserid) {
+//
+//     // Using USERID call teamid
+//     var teamid = fakeapi[tempuserid];
+//
+//     // Using teamid call reports list
+//     var reports = fakeapi[teamid];
+//
+//     var firstblankone = document.getElementById("blank");
+//     var tempcopy;
+//
+//
+//     for (var i = 0; i < reports.length; i++) {
+//       tempcopy = firstblankone.cloneNode(true);
+//       tempcopy = setupcard(tempcopy,reports[i]);
+//       mainholder.appendChild(tempcopy);
+//     }
+//     firstblankone.remove();
+// }
+
+
+
+
+// var userid = getUrlParam("userid","empty")
+
+
+// var reportslist = [
+//     {"reportid":"0001",
+//      "targetteam" : "Penn",
+//      "games" : ["Penn vs Harvard","Penn vs Cornell","Penn vs Princeton","Penn vs Yale"]},
+//     {"reportid":"0002",
+//     "targetteam" : "FSU",
+//     "games" : ["FSU vs UM","FSU vs UF","FSU vs UCF"]},
+//     {"reportid":"0003",
+//     "targetteam" : "Alabama",
+//     "games" : ["Alabama vs Texas"]}];
+
+// var fakeapi = {"1111":"MASTER","MASTER":reportslist};
+
+
+
+export function browseReport(){
+  authAndRun((team)=>{
+    listObjsAndRun(`${team}/reports`,"titancommonstorage",(data)=>{
       console.log(data);
       var keylst = [];
       for(var i = 0; i < data.Contents.length;i++){
@@ -62,10 +88,10 @@ class BrowseReport extends React.Component {
           keylst.push(data.Contents[i].Key);
       }
       var mainholder = document.getElementById("holder");
-        document.body.script.iteratedObjGet("titancommonstorage",keylst,[],(data)=>{
+      iteratedObjGet("titancommonstorage",keylst,[],(data)=>{
         data.forEach((d,i)=>{
           if(d.metadata){
-            if(d.metadata.reportid ==   document.body.script.getUrlParam("reportid","empty")){
+            if(d.metadata.reportid == getUrlParam("reportid","empty")){
               console.log(d.metadata.reportid);
               var card = mainholder.appendChild(document.createElement('div'));
               card.className = "report-card-holder col-md-2";
@@ -103,7 +129,7 @@ class BrowseReport extends React.Component {
               openButton.style.marginBottom = "5px";
               openButton.type = "button";
               openButton.className = "btn btn-primary";
-              openButton.addEventListener('click',(event)=>{this.openreport(d.metadata.reportid)},false);
+              openButton.addEventListener('click',(event)=>{openreport(d.metadata.reportid)},false);
               buttonDiv.appendChild(openButton);
 
               buttonDiv.appendChild(document.createElement("br"))
@@ -112,13 +138,13 @@ class BrowseReport extends React.Component {
               editButton.innerHTML = "Edit"
               editButton.type = "button";
               editButton.className = "btn btn-warning";
-              editButton.addEventListener('click',(event)=>{this.editreport(d.metadata.reportid)},false);
+              editButton.addEventListener('click',(event)=>{editreport(d.metadata.reportid)},false);
 
               var removeButton = document.createElement("button");
               removeButton.innerHTML = "Remove"
               removeButton.type = "button";
               removeButton.className = "btn btn-danger";
-              removeButton.addEventListener('click',(event)=>{this.deletereport(d.metadata.reportid)},false);
+              removeButton.addEventListener('click',(event)=>{deletereport(d.metadata.reportid)},false);
 
               buttonDiv.appendChild(editButton);
               buttonDiv.appendChild(document.createElement("br"))
@@ -140,13 +166,13 @@ class BrowseReport extends React.Component {
               var keyCheck = `${team}/reports/${reportid}/data_${team}_${reportid}.json`;
               var dir = `${team}/reports/${reportid}`;
               // console.log(keyCheck)
-                document.body.script.listObjsAndRun(dir,"titancommonstorage",(data)=>{
+              listObjsAndRun(dir,"titancommonstorage",(data)=>{
                 // console.log(data.Contents);
                 if(data.Contents.some((obj)=>{return obj.Key === keyCheck})){
-                  if(  document.body.script.getUrlParam("updatereport","empty") != "empty"){
+                  if(getUrlParam("updatereport","empty") != "empty"){
                     //If new data needed to be made
                     alert("Please do not refresh the page, your report request is proccessing. When the report is ready it will appear black, if not it will stay orange");
-                      document.body.script.callLambdaAndRun(d,"generate_scorecards",(result)=>{
+                    callLambdaAndRun(d,"generate_scorecards",(result)=>{
                       console.log(result);
                       if(result.FunctionError === "Unhandled"){
                         reportlst.style.backgroundColor = "rgb(150,50,50)";
@@ -170,7 +196,7 @@ class BrowseReport extends React.Component {
                 }
                 else{
                   console.log("data not detected");
-                    document.body.script.callLambdaAndRun(d,"generate_scorecards",(result)=>{
+                  callLambdaAndRun(d,"generate_scorecards",(result)=>{
                     console.log(result);
                     if(result.FunctionError === "Unhandled"){
                       reportlst.style.backgroundColor = "rgb(150,50,50)";
@@ -230,7 +256,7 @@ class BrowseReport extends React.Component {
               openButton.style.marginBottom = "5px";
               openButton.type = "button";
               openButton.className = "btn btn-primary";
-              openButton.addEventListener('click',(event)=>{this.openreport(d.metadata.reportid)},false);
+              openButton.addEventListener('click',(event)=>{openreport(d.metadata.reportid)},false);
               buttonDiv.appendChild(openButton);
 
               buttonDiv.appendChild(document.createElement("br"))
@@ -239,13 +265,13 @@ class BrowseReport extends React.Component {
               editButton.innerHTML = "Edit"
               editButton.type = "button";
               editButton.className = "btn btn-warning";
-              editButton.addEventListener('click',(event)=>{this.editreport(d.metadata.reportid)},false);
+              editButton.addEventListener('click',(event)=>{editreport(d.metadata.reportid)},false);
 
               var removeButton = document.createElement("button");
               removeButton.innerHTML = "Remove"
               removeButton.type = "button";
               removeButton.className = "btn btn-danger";
-              removeButton.addEventListener('click',(event)=>{this.deletereport(d.metadata.reportid)},false);
+              removeButton.addEventListener('click',(event)=>{deletereport(d.metadata.reportid)},false);
 
               buttonDiv.appendChild(editButton);
               buttonDiv.appendChild(document.createElement("br"))
@@ -258,19 +284,5 @@ class BrowseReport extends React.Component {
         });
       });
     });
-  };
-
-
-  render(){
-    return (
-
-      <div class ="container-fluid mainbackground">
-        <br/>
-        <div id="holder" class="row">
-        </div>
-      </div>
-  );
-  }
+  });
 }
-
-export default BrowseReport;

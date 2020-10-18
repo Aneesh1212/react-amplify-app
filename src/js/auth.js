@@ -82,7 +82,7 @@ export function authAndReturnParams(callback){
 }
 
 
-function authAndRun(callback){
+export function authAndRun(callback){
     cognitoUser.getSession(function(err, session) {
     if (err) {	alert(err.message || JSON.stringify(err)); return;}
     // console.log('session validity: ' + session.isValid());
@@ -126,7 +126,7 @@ function authAndRun(callback){
   });
 }
 
-function iteratedObjGet(bucket,keylst,agg,callback){
+export function iteratedObjGet(bucket,keylst,agg,callback){
   if(keylst.length == 0){
     callback(agg);
   }
@@ -139,7 +139,7 @@ function iteratedObjGet(bucket,keylst,agg,callback){
   }
 }
 
-function getObjAndRun(bucket,key,callback){
+export function getObjAndRun(bucket,key,callback){
   var s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { Bucket: bucket }
@@ -169,7 +169,7 @@ function getObjAndRun(bucket,key,callback){
   });
 }
 
-function deleteObjectAndRun(bucket,key,callback){
+export function deleteObjectAndRun(bucket,key,callback){
   var s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { Bucket: bucket }
@@ -194,7 +194,7 @@ function deleteObjectAndRun(bucket,key,callback){
 }
 
 
-function listObjsAndRun(prefix,bucket,callback){
+export function listObjsAndRun(prefix,bucket,callback){
   var s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { Bucket: bucket }
@@ -220,7 +220,7 @@ function listObjsAndRun(prefix,bucket,callback){
   });
 }
 
-function putObjAndRun(bucket,key,filebody,callback){
+export function putObjAndRun(bucket,key,filebody,callback){
   var s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { Bucket: bucket }
@@ -243,7 +243,7 @@ function putObjAndRun(bucket,key,filebody,callback){
   });
 }
 
-function callLambdaAndRun(jsonObj,functionName,callback){
+export function callLambdaAndRun(jsonObj,functionName,callback){
   var lambda = new AWS.Lambda(
               {credentials: AWS.config.credentials,
                    region : _config.cognito.region });

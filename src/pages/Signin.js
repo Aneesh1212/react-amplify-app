@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
-import './css/login.css';
+import '../css/login.css';
 import { Redirect } from "react-router-dom";
 import Link from 'react';
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import $ from 'jquery';
 import AWS from 'aws-sdk';
-import _config from './cognito-config.js';
+import _config from '../cognito-config.js';
 
 
 class Signin extends React.Component {
